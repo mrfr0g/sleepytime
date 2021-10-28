@@ -12,10 +12,12 @@ function getDuration(timeSlot) {
 }
 
 /**
- * Calculates sleep effectiveness using our proven formula
- * @param {Number} durationAsleep
- * @param {Number} durationInBed
- * @returns Percent
+ * Calculates sleep effectiveness using our proven formula;
+ *  - Converts time slot strings into minutes
+ *  - Calculates and returns rating
+ * @param {String} durationAsleep Time slot string like "00h:30m"
+ * @param {String} durationInBed Time slot string like "00h:30m"
+ * @returns {Number} Rating
  */
 export function calculateSleepEffectiveness(durationAsleep, durationInBed) {
   console.log(
