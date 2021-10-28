@@ -1,10 +1,10 @@
-# Assessment
+# SleepyTime UI
 
 This app will help you keep track of your time asleep, over your time in bed.
 
-## Client Development
+## Development
 
-The client uses [grommet-starter-app](https://github.com/grommet/grommet-starter-new-app) as a base application. Under the hood this is just a collection of scripts, and webpack configurations that provide a set of helpful features like testing, webpack hot reload, and babel configuration for React.
+The UI uses [grommet-starter-app](https://github.com/grommet/grommet-starter-new-app) as a base application. Under the hood this is just a collection of scripts, and webpack configurations that provide a set of helpful features like testing, webpack hot reload, and babel configuration for React.
 
 ### Running
 
