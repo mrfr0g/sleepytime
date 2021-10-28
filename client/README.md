@@ -18,6 +18,8 @@ The UI uses [grommet-starter-app](https://github.com/grommet/grommet-starter-new
 
 Testing is done using a combination of Jest, and Enzyme. Jest provides a BDD style testing framework, which lets us quicky generate tests, and mocks at the unit test level. Enzyme lets us test our component integration with a mock browser. In this stack, Jest lets us ask questions like "does this function return 20?", and Enzyme lets us ask "when clicking on this button, does it fire a redux action?"
 
+TODO add Enzyme -- Time won't allow me to add this right now
+
 ### Starting tests
 
 `yarn test`
