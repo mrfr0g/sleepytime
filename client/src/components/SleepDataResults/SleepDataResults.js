@@ -1,6 +1,13 @@
 import React from 'react';
 import { Box, Heading, Text, Button } from 'grommet';
 
+/**
+ * Returns the sleep results component
+ * TODO Remove static/mock stats before production
+ * @property {Number} results The calculation results to display
+ * @property {Function} onRestart An optional function called when the 'Reset?' button is pressed
+ * @returns Component
+ */
 export function SleepDataResults({ results, onRestart = () => {} }) {
   return (
     <Box fill align="center">

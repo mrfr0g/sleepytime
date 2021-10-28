@@ -1,6 +1,11 @@
 import React from 'react';
 import { Box } from 'grommet';
 
+/**
+ * Renders an application header
+ * @param {Object} props
+ * @returns Component
+ */
 export function AppBar(props) {
   return (
     <Box
