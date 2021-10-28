@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import {
-  Box,
   Button,
-  Collapsible,
+  Box,
   Heading,
+  Form,
+  FormField,
   Grommet,
-  Layer,
   ResponsiveContext,
 } from 'grommet';
-import { FormClose, Notification } from 'grommet-icons';
+
+import { DurationDropDown } from './components/DurationDropDown/DurationDropDown';
+import { AppBar } from './components/AppBar/AppBar';
 
 const theme = {
   global: {
@@ -17,92 +19,68 @@ const theme = {
     },
     font: {
       family: 'Roboto',
-      size: '14px',
+      size: '16px',
       height: '20px',
     },
   },
 };
 
-const AppBar = (props) => (
-  <Box
-    tag='header'
-    direction='row'
-    align='center'
-    justify='between'
-    background='brand'
-    pad={{ left: 'medium', right: 'small', vertical: 'small' }}
-    elevation='medium'
-    style={{ zIndex: '1' }}
-    {...props}
-  />
-);
+function App() {
+  const [data, setData] = useState({});
+  const [valid, setValid] = useState(false);
 
-class App extends Component {
-  state = {
-    showSidebar: false,
-  }
-  render() {
-    const { showSidebar } = this.state;
-    return (
-      <Grommet theme={theme} full>
-        <ResponsiveContext.Consumer>
-          {size => (
-            <Box fill>
-              <AppBar>
-                <Heading level='3' margin='none'>My App</Heading>
-                <Button
-                  icon={<Notification />}
-                  onClick={() => this.setState({ showSidebar: !this.state.showSidebar })}
-                />
-              </AppBar>
-              <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
-                <Box flex align='center' justify='center'>
-                  app body
+  return (
+    <Grommet theme={theme} full>
+      <ResponsiveContext.Consumer>
+        {(size) => (
+          <Box fill>
+            <AppBar>
+              <Heading level="3" margin="none">
+                SleepyTime
+              </Heading>
+            </AppBar>
+            <Form
+              value={data}
+              onChange={(nextValue) => setData(nextValue)}
+              onSubmit={({ value }) => {}}
+              validate="change"
+              onValidate={(e) => {
+                // Avoid causing an update while Form is updating
+                setTimeout(() => {
+                  setValid(e.valid);
+                }, 0);
+              }}
+            >
+              <Box pad="small">
+                <FormField
+                  name="inBedDuration"
+                  label="Duration in bed *"
+                  required={true}
+                >
+                  <DurationDropDown name="inBedDuration" />
+                </FormField>
+                <FormField
+                  name="inSleepDuration"
+                  label="Duration asleep *"
+                  required={true}
+                >
+                  <DurationDropDown name="inSleepDuration" />
+                </FormField>
+                <Box width="small" alignSelf="end">
+                  <Button
+                    disabled={!valid}
+                    primary
+                    type="submit"
+                    label="Calculate"
+                  />
                 </Box>
-                {(!showSidebar || size !== 'small') ? (
-                  <Collapsible direction="horizontal" open={showSidebar}>
-                    <Box
-                      flex
-                      width='medium'
-                      background='light-2'
-                      elevation='small'
-                      align='center'
-                      justify='center'
-                    >
-                      sidebar
-                    </Box>
-                  </Collapsible>
-                ): (
-                  <Layer>
-                    <Box
-                      background='light-2'
-                      tag='header'
-                      justify='end'
-                      align='center'
-                      direction='row'
-                    >
-                      <Button
-                        icon={<FormClose />}
-                        onClick={() => this.setState({ showSidebar: false })}
-                      />
-                    </Box>
-                    <Box
-                      fill
-                      background='light-2'
-                      align='center'
-                      justify='center'
-                    >
-                      sidebar
-                    </Box>
-                  </Layer>
-                )}
               </Box>
-            </Box>
-          )}
-        </ResponsiveContext.Consumer>
-      </Grommet>
-    );
-  }
+            </Form>
+          </Box>
+        )}
+      </ResponsiveContext.Consumer>
+    </Grommet>
+  );
 }
 
 export default App;
