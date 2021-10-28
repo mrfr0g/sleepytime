@@ -9,7 +9,7 @@ export function AppBar(props) {
       align="center"
       justify="between"
       background="brand"
-      pad={{ left: 'medium', right: 'small', vertical: 'small' }}
+      pad={{ left: 'medium', right: 'small', vertical: 'medium' }}
       elevation="medium"
       style={{ zIndex: '1' }}
       {...props}

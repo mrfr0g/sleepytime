@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  Box,
-  Heading,
-  Form,
-  FormField,
-  Grommet,
-  ResponsiveContext,
-} from 'grommet';
+import { Box, Heading, Grommet, ResponsiveContext } from 'grommet';
 
-import { DurationDropDown } from './components/DurationDropDown/DurationDropDown';
 import { AppBar } from './components/AppBar/AppBar';
+import { CollectSleepDataForm } from './components/CollectSleepDataForm/CollectSleepDataForm';
+import { Loading } from './components/Loading/Loading';
+import { Error } from './components/Error/Error';
+import { SleepDataResults } from './components/SleepDataResults/SleepDataResults';
 
 const theme = {
   global: {
@@ -25,9 +20,46 @@ const theme = {
   },
 };
 
+// Collecting sleep data
+const COLLECT_DATA_STATE = 'COLLECT_DATA_STATE';
+
+// Calculating results
+const CALCULATE_RESULTS_STATE = 'CALCULATE_RESULTS_STATE';
+
+// Presenting error
+const PRESENT_ERROR_STATE = 'PRESENT_ERROR_STATE';
+
+// Presenting results
+const PRESENT_RESULTS_STATE = 'PRESENT_RESULTS_STATE';
+
 function App() {
-  const [data, setData] = useState({});
-  const [valid, setValid] = useState(false);
+  const initialState = {
+    name: PRESENT_RESULTS_STATE,
+    data: {},
+  };
+
+  // This will track our state through the workflow
+  const [currentState, setCurrentState] = useState(initialState);
+
+  const getComponentForState = () => {
+    switch (currentState.name) {
+      case CALCULATE_RESULTS_STATE:
+        return <Loading />;
+      case PRESENT_ERROR_STATE:
+        return (
+          <Error
+            onReset={() => {
+              setCurrentState(initialState);
+            }}
+          />
+        );
+      case PRESENT_RESULTS_STATE:
+        return <SleepDataResults results={{ total: 47 }} />;
+      case COLLECT_DATA_STATE:
+      default:
+        return <CollectSleepDataForm onChange={() => {}} />;
+    }
+  };
 
   return (
     <Grommet theme={theme} full>
@@ -39,43 +71,7 @@ function App() {
                 SleepyTime
               </Heading>
             </AppBar>
-            <Form
-              value={data}
-              onChange={(nextValue) => setData(nextValue)}
-              onSubmit={({ value }) => {}}
-              validate="change"
-              onValidate={(e) => {
-                // Avoid causing an update while Form is updating
-                setTimeout(() => {
-                  setValid(e.valid);
-                }, 0);
-              }}
-            >
-              <Box pad="small">
-                <FormField
-                  name="inBedDuration"
-                  label="Duration in bed *"
-                  required={true}
-                >
-                  <DurationDropDown name="inBedDuration" />
-                </FormField>
-                <FormField
-                  name="inSleepDuration"
-                  label="Duration asleep *"
-                  required={true}
-                >
-                  <DurationDropDown name="inSleepDuration" />
-                </FormField>
-                <Box width="small" alignSelf="end">
-                  <Button
-                    disabled={!valid}
-                    primary
-                    type="submit"
-                    label="Calculate"
-                  />
-                </Box>
-              </Box>
-            </Form>
+            {getComponentForState()}
           </Box>
         )}
       </ResponsiveContext.Consumer>
