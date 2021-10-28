@@ -7,6 +7,7 @@ export function Loading() {
       <Box align="center">
         <Text>Loading...</Text>
         <iframe
+          title="via GIPHY - https://giphy.com/gifs/funny-art-cute-3ov9jVajUykLpFTMQM"
           data-attribution="via GIPHY - https://giphy.com/gifs/funny-art-cute-3ov9jVajUykLpFTMQM"
           src="https://giphy.com/embed/3ov9jVajUykLpFTMQM"
           width="467"
